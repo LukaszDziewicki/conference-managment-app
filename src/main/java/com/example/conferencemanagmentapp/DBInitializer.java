@@ -7,7 +7,6 @@ import com.example.conferencemanagmentapp.model.ConferenceBreak;
 import com.example.conferencemanagmentapp.model.LectureRoot;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
