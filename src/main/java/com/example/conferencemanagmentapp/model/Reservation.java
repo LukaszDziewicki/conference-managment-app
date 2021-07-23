@@ -10,4 +10,6 @@ public class Reservation {
 
     @ManyToOne
     private User user;
+
+
 }
