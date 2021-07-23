@@ -4,16 +4,18 @@ import com.example.conferencemanagmentapp.model.Conference;
 import com.example.conferencemanagmentapp.model.ConferenceBreak;
 import com.example.conferencemanagmentapp.model.Lecture;
 import com.example.conferencemanagmentapp.model.LectureRoot;
+import lombok.Data;
 import lombok.Getter;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
+@Data
 @Getter
 public class ConferenceInitializer {
-    public static final Conference CONFERENCE_PLAN = generateConference();
+    public static final Conference CONFERENCE = generateConference();
+    public static final List<Lecture> LECTURES = generateLectures();
 
     private static Conference generateConference(){
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m:s");
@@ -70,8 +72,8 @@ public class ConferenceInitializer {
         return lectureRoots;
     }
 
-    private static Set<ConferenceBreak> generateConferenceBreaks(){
-        Set<ConferenceBreak> conferenceBreaks = new HashSet<>();
+    private static List<ConferenceBreak> generateConferenceBreaks(){
+        List<ConferenceBreak> conferenceBreaks = new ArrayList<>();
 
         conferenceBreaks.add(
                 new ConferenceBreak(
