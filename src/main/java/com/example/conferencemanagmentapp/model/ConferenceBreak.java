@@ -1,7 +1,6 @@
 package com.example.conferencemanagmentapp.model;
 
 import lombok.Data;
-
 import java.time.LocalTime;
 
 @Data
