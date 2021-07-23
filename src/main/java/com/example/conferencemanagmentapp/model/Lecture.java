@@ -1,8 +1,11 @@
 package com.example.conferencemanagmentapp.model;
 
+import lombok.Data;
+
 import java.time.LocalTime;
 import java.util.Map;
 
+@Data
 public class Lecture {
     private Long id;
     private LocalTime start;

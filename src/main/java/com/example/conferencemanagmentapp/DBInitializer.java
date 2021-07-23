@@ -1,6 +1,5 @@
 package com.example.conferencemanagmentapp;
 
-
 import com.example.conferencemanagmentapp.model.Conference;
 import com.example.conferencemanagmentapp.model.Lecture;
 import com.example.conferencemanagmentapp.model.ConferenceBreak;
@@ -10,20 +9,19 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 
 @Component
-public class DBInitializer implements CommandLineRunner {
+public class DBInitializer implements CommandLineRunner{
 
+    public DBInitializer() {
+    }
 
     @Override
     public void run(String... args) {
     generateConference();
     }
-
 
 
     private Conference generateConference(){
@@ -37,8 +35,6 @@ public class DBInitializer implements CommandLineRunner {
                 generateConferenceBreaks()
         );
     }
-
-
 
     private Map<LocalTime, Lecture> generateLectures(){
         Map<LocalTime, Lecture> lectures = new TreeMap<>();
@@ -84,13 +80,28 @@ public class DBInitializer implements CommandLineRunner {
         return lectureRoots;
     }
 
-    //TODO method to generateConferenceBreaks
     private Set<ConferenceBreak> generateConferenceBreaks(){
+    Set<ConferenceBreak> conferenceBreaks = new HashSet<>();
+    conferenceBreaks.add(
+            new ConferenceBreak(
+                    LocalTime.of(11, 45),
+                    LocalTime.of(12, 0)
+            )
+    );
 
+        conferenceBreaks.add(
+                new ConferenceBreak(
+                        LocalTime.of(13, 45),
+                        LocalTime.of(14, 0)
+                )
+        );
+
+        return conferenceBreaks;
     }
 
     //TODO add method addExampleUsersToDB()
     private void addExampleUsersToDB(){
 
     }
+
 }

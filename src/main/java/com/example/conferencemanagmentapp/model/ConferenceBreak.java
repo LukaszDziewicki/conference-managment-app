@@ -1,8 +1,16 @@
 package com.example.conferencemanagmentapp.model;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
+import java.time.LocalTime;
+
+@Data
 public class ConferenceBreak {
-    private LocalDateTime fromDateTime;
-    private LocalDateTime toDateTime;
+    private LocalTime breakFrom;
+    private LocalTime breakTo;
+
+    public ConferenceBreak(LocalTime breakFrom, LocalTime breakTo) {
+        this.breakFrom = breakFrom;
+        this.breakTo = breakTo;
+    }
 }

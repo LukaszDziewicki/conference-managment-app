@@ -1,5 +1,6 @@
 package com.example.conferencemanagmentapp.model;
 
+import com.example.conferencemanagmentapp.model.entity.User;
 import lombok.Data;
 
 @Data

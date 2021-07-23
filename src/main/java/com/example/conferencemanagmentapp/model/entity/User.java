@@ -1,4 +1,4 @@
-package com.example.conferencemanagmentapp.model;
+package com.example.conferencemanagmentapp.model.entity;
 
 import lombok.Data;
 
@@ -9,13 +9,11 @@ import java.util.Set;
 @Data
 @Entity
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
     private String email;
-
     @OneToMany
     Set<Reservation> reservations = new HashSet<>();
 }
