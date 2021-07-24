@@ -19,13 +19,22 @@ public class UserServiceImpl {
         userRepository.save(user);
     }
 
+    public void saveAll(List<User> users){
+        userRepository.saveAll(users);
+    }
+
     public List<User> findAll(){
         return userRepository.findAll();
     }
 
-   public boolean sendEmail(Email email) {
-        return false;
-        //TODO mail do pliku o nazwie „powiadomienia”
+    public boolean existsUserByLoginAndEmailIsNotLike(String login, String email){
+        return userRepository.existsUserByLoginAndEmailIsNotLike(login, email);
     }
+
+    public boolean existsUserByLoginAndEmail(String login, String email){
+        return userRepository.existsUserByLoginAndEmail(login, email);
+    }
+
+
 
 }

@@ -15,9 +15,10 @@ public class User {
     private Long id;
 
 
-    @JsonView(View.UserReservations.class)
+    @JsonView({View.UserReservations.class, View.UserList.class})
     private String login;
 
+    @JsonView(View.UserList.class)
     private String email;
 
     public User(String login, String email) {
