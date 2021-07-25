@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -23,9 +23,9 @@ public class UserController {
 
     @GetMapping()
     @JsonView(View.UserList.class)
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<Set<User> > getAllUsers() {
         try {
-            List<User> users = userService.findAll();
+            Set<User> users = userService.findAll();
             if (users.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

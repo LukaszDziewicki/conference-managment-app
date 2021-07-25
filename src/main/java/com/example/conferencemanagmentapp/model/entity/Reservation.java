@@ -17,8 +17,9 @@ public class Reservation {
     @JsonView(View.UserReservations.class)
     private Long id;
 
-    @ManyToOne
+
     @JsonView(View.UserReservations.class)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
     @JsonView(View.UserReservations.class)

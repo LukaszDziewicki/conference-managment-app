@@ -2,16 +2,23 @@ package com.example.conferencemanagmentapp.controller;
 
 import com.example.conferencemanagmentapp.model.View;
 import com.example.conferencemanagmentapp.model.entity.Reservation;
+import com.example.conferencemanagmentapp.model.entity.User;
 import com.example.conferencemanagmentapp.service.ConferencesServiceImpl;
 import com.example.conferencemanagmentapp.service.ReservationServiceImpl;
 import com.example.conferencemanagmentapp.service.UserServiceImpl;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/reservations")
 public class ReservationController {
 
@@ -40,21 +47,21 @@ public class ReservationController {
         }
     }
 
-   /* // TODO:
+
     @PostMapping("/{lectureId}/{lectureRootMapKey}")
     @JsonView(View.ConferencePlan.class)
-    public ResponseEntity<String> makeReservation(@PathVariable(value = "lectureId") int lectureId,
-                                                  @PathVariable(value = "lectureRootMapKey") int lectureRootMapKey,
+    public ResponseEntity<String> makeReservation(@PathVariable(value = "lectureId") @Valid @Min(1)@Max(3) int lectureId,
+                                                  @PathVariable(value = "lectureRootMapKey")@Valid @Min(1)@Max(3) int lectureRootMapKey,
                                                   @RequestBody User user){
 
 
-        if(userService.existsUserByLoginAndEmailIsNotLike(user.getLogin(), user.getEmail())){
-            //TODO: komunikat (Podany login jest już zajęty”.)
-        }else if (reservationService.makeReservation(user, lectureId, lectureRootMapKey)){
-           //TODO: komunikat rezerwacja się powiodła
+        if(userService.existsUserByLoginAndEmailIsNot(user.getLogin(), user.getEmail())){
+            return new ResponseEntity<>("Podany login jest już zajęty", HttpStatus.NOT_FOUND);
+        } else if(reservationService.makeReservation(user, lectureId, lectureRootMapKey)){
+            return ResponseEntity.ok("Possible reservations, Email sended");
         }
-        }
+        return new ResponseEntity<>("Brak miejsc lub jesteś już zarejestrowany", HttpStatus.NOT_FOUND);
 
-        return ResponseEntity.ok("Possible reservations, Email sended");
-    }*/
+
+    }
 }

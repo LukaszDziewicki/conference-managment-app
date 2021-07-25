@@ -1,10 +1,12 @@
 package com.example.conferencemanagmentapp.service;
 
-import com.example.conferencemanagmentapp.model.Email;
 import com.example.conferencemanagmentapp.model.entity.User;
 import com.example.conferencemanagmentapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 @Service
 public class UserServiceImpl {
@@ -15,25 +17,18 @@ public class UserServiceImpl {
     }
 
 
-    public void save(User user) {
-        userRepository.save(user);
+    public Set<User> findAll(){
+        List<User> userList = null;
+        userList = userRepository.findAll();
+        Set<User> usersSet = new HashSet<User>(userList);
+        return usersSet;
     }
 
-    public void saveAll(List<User> users){
-        userRepository.saveAll(users);
+    public boolean existsUserByLoginAndEmailIsNot(String login, String email){
+        return userRepository.existsUserByLoginAndEmailIsNot(login, email);
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
-    }
 
-    public boolean existsUserByLoginAndEmailIsNotLike(String login, String email){
-        return userRepository.existsUserByLoginAndEmailIsNotLike(login, email);
-    }
-
-    public boolean existsUserByLoginAndEmail(String login, String email){
-        return userRepository.existsUserByLoginAndEmail(login, email);
-    }
 
 
 

@@ -1,23 +1,18 @@
 package com.example.conferencemanagmentapp.service;
 
-import com.example.conferencemanagmentapp.init.ConferenceInitializer;
 import com.example.conferencemanagmentapp.model.Email;
 import com.example.conferencemanagmentapp.model.LectureRoot;
 import com.example.conferencemanagmentapp.model.entity.Reservation;
 import com.example.conferencemanagmentapp.model.entity.User;
 import com.example.conferencemanagmentapp.repository.ReservationRepository;
-import lombok.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.ObjectError;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Transactional
@@ -33,25 +28,14 @@ public class ReservationServiceImpl {
         this.conferencesService = conferencesService;
     }
 
-    private void save(Reservation reservation) {
-        reservationRepository.save(reservation);
-        conferencesService.saveReservation(
-                reservation.getUser(),
-                reservation.getLectureId(),
-                reservation.getLectureRootMapKey()
-        );
-    }
-
-    public List<Reservation> findReservationsByUserLogin(String login) {
-        return reservationRepository.findReservationsByUserLogin(login);
-    }
-
     public boolean makeReservation(User user, int lectureId, int lectureRootMapKey) {
         LectureRoot lectureRoot = conferencesService.getLectureRootByIdAndKey(lectureId, lectureRootMapKey);
         Reservation reservation = new Reservation(user, lectureId, lectureRootMapKey);
         Email email = new Email(user.getEmail());
 
-        if (conferencesService.isSpaceAvailable(lectureRoot)) {
+        if (existsReservation(user.getLogin(), user.getEmail(), lectureId)) {
+            return false;
+        } else if (conferencesService.isSpaceAvailable(lectureRoot)) {
             save(reservation);
             sendEmail(email);
             return true;
@@ -59,7 +43,20 @@ public class ReservationServiceImpl {
         return false;
     }
 
-    public void sendEmail( Email email) {
+    private boolean existsReservation(String login, String email, int lectureId){
+        return reservationRepository.existsReservationByUserLoginAndUserEmailAndLectureId(login, email, lectureId);
+    }
+
+    private void save(Reservation reservation) {
+        reservationRepository.save(reservation);
+       conferencesService.saveUserToLecture(
+                reservation.getUser(),
+                reservation.getLectureId(),
+                reservation.getLectureRootMapKey()
+        );
+    }
+
+    private void sendEmail(Email email) {
         String filePath = "src/main/resources/powiadomienia.txt";
 
         try {
@@ -72,4 +69,12 @@ public class ReservationServiceImpl {
 
         }
     }
+
+    public List<Reservation> findReservationsByUserLogin(String login) {
+        return reservationRepository.findReservationsByUserLogin(login);
+    }
+
+
+
+
 }
