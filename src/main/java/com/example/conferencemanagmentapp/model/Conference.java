@@ -2,7 +2,6 @@ package com.example.conferencemanagmentapp.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -3,7 +3,6 @@ package com.example.conferencemanagmentapp.controller;
 import com.example.conferencemanagmentapp.model.View;
 import com.example.conferencemanagmentapp.model.entity.Reservation;
 import com.example.conferencemanagmentapp.model.entity.User;
-import com.example.conferencemanagmentapp.service.ConferencesServiceImpl;
 import com.example.conferencemanagmentapp.service.ReservationServiceImpl;
 import com.example.conferencemanagmentapp.service.UserServiceImpl;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -24,12 +23,10 @@ public class ReservationController {
 
     private final ReservationServiceImpl reservationService;
     private final UserServiceImpl userService;
-    private final ConferencesServiceImpl conferencesService;
 
-    public ReservationController(ReservationServiceImpl reservationService, UserServiceImpl userService, ConferencesServiceImpl conferencesService) {
+    public ReservationController(ReservationServiceImpl reservationService, UserServiceImpl userService) {
         this.reservationService = reservationService;
         this.userService = userService;
-        this.conferencesService = conferencesService;
     }
 
     @PostMapping("/")
@@ -50,18 +47,15 @@ public class ReservationController {
 
     @PostMapping("/{lectureId}/{lectureRootMapKey}")
     @JsonView(View.ConferencePlan.class)
-    public ResponseEntity<String> makeReservation(@PathVariable(value = "lectureId") @Valid @Min(1)@Max(3) int lectureId,
-                                                  @PathVariable(value = "lectureRootMapKey")@Valid @Min(1)@Max(3) int lectureRootMapKey,
+    public ResponseEntity<String> makeReservation(@PathVariable(value = "lectureId") @Min(1)@Max(3) int lectureId,
+                                                  @PathVariable(value = "lectureRootMapKey") @Min(1)@Max(3) int lectureRootMapKey,
                                                   @RequestBody User user){
-
-
         if(userService.existsUserByLoginAndEmailIsNot(user.getLogin(), user.getEmail())){
             return new ResponseEntity<>("Podany login jest już zajęty", HttpStatus.NOT_FOUND);
         } else if(reservationService.makeReservation(user, lectureId, lectureRootMapKey)){
-            return ResponseEntity.ok("Possible reservations, Email sended");
+            return new  ResponseEntity<>("Udana rezerwacja, Email został wysłany", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Brak miejsc lub jesteś już zarejestrowany", HttpStatus.NOT_FOUND);
-
+        return new ResponseEntity<>("Brak miejsc lub użytkownik jest już zarejestrowany na prelekcje", HttpStatus.NOT_FOUND);
 
     }
 }

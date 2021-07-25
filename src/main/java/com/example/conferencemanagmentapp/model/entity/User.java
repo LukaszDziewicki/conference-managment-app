@@ -16,10 +16,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonView({View.UserReservations.class, View.UserList.class})
+    @JsonView({View.UserReservations.class})
     private String login;
 
-    @JsonView(View.UserList.class)
     private String email;
 
     @OneToMany(cascade = CascadeType.MERGE)
