@@ -1,8 +1,4 @@
 # conference-managment-app
-## Table of contents
-* [Example](#Example)
-* [Pull](#Pull)
-
 
 # Example Postman Requests
 Użytkownik może obejrzeć plan konferencji. 
@@ -13,6 +9,8 @@ Użytkownik po podaniu swojego loginu jako requestparam może obejrzeć prelekcj
 
     POST http://localhost:8085/reservations/
     PARAM: login=?
+    
+    POST http://localhost:8085/reservations/{lectureID}/{lectureRootID}
     
 Jeżeli prelekcja ma jeszcze wolne miejsca, użytkownik ma możliwość dokonania rezerwacji. Podczas dokonywania rezerwacji powinien podać swój login oraz adres e-mail jako requestBody.
 + Jeżeli w systemie istnieje już użytkownik z danym loginem, ale z innym adresem e-mail, system powinien zaprezentować komunikat „Podany login jest już zajęty”.
