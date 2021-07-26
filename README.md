@@ -19,7 +19,8 @@ Jeżeli prelekcja ma jeszcze wolne miejsca, użytkownik ma możliwość dokonani
 +  Poprawne dokonanie rezerwacji skutkuje wysłaniem powiadomienia użytkownikowi na podany przez niego adres (wysyłka wiadomości - patrz wskazówki). 
 
 
-    POST http://localhost:8085/reservations/{lectureID}/{lectureRootID}
+        POST http://localhost:8085/reservations/{lectureID}/{lectureRootID}
+    
 ##### Path:
     lectureID:      (1-3)   - 3 prelekcje do wyboru
     lectureRootID:  (1-3)   - 3 ścieżki do wyboru
